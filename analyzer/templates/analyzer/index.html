@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GreenPulse - Urban Green Space Analysis</title>
+    <!-- I will add CSS styling later -->
+</head>
+<body>
+    <h1>Welcome to GreenPulse!</h1>
+    <p>Enter a city name to analyze its green spaces.</p>
+    <p><em>(e.g., "Paris, France" or "San Francisco, USA")</em></p>
+
+    <form action="" method="POST">
+        {% csrf_token %} <!-- Important Django security feature -->
+        <input type="text" name="city" placeholder="Enter city name..." required>
+        <button type="submit">Analyze</button>
+    </form>
+
+</body>
+</html>
