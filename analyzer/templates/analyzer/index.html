@@ -3,18 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>GreenPulse - Urban Green Space Analysis</title>
-    <!-- I will add CSS styling later -->
+    <style>
+        /* Some basic styling for a better look */
+        body { font-family: sans-serif; margin: 2em; }
+        .results { border: 1px solid #ccc; padding: 1em; margin-top: 2em; }
+        .error { color: red; }
+        .map-container { height: 500px; }
+    </style>
 </head>
 <body>
     <h1>Welcome to GreenPulse!</h1>
     <p>Enter a city name to analyze its green spaces.</p>
     <p><em>(e.g., "Paris, France" or "San Francisco, USA")</em></p>
 
-    <form action="" method="POST">
-        {% csrf_token %} <!-- Important Django security feature -->
+    <form action="{% url 'home' %}" method="POST"> <!-- Using the URL name -->
+        {% csrf_token %}
         <input type="text" name="city" placeholder="Enter city name..." required>
         <button type="submit">Analyze</button>
     </form>
+
+    {# --- This is the new section that displays results --- #}
+
+    {% if error_message %}
+        <div class="results">
+            <p class="error">{{ error_message }}</p>
+        </div>
+    {% endif %}
+
+    {% if city_name and not error_message %}
+        <div class="results">
+            <h2>Analysis for: {{ city_name }}</h2>
+            <ul>
+                <li>Number of Green Spaces Found: <strong>{{ num_parks }}</strong></li>
+                <li>Total Green Space Area: <strong>{{ total_area }} km²</strong></li>
+            </ul>
+            <h3>Map</h3>
+            <div class="map-container">
+                {{ map_html|safe }} {# The 'safe' filter is crucial to render HTML #}
+            </div>
+        </div>
+    {% endif %}
 
 </body>
 </html>
