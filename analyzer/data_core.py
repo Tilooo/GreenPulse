@@ -63,7 +63,7 @@ def get_city_population(city_name):
         population_str = match.group(1).strip()
         print(f"Found potential population string: '{population_str}'")
 
-        # --- FUNCTION TO PARSE THE STRING ---
+        # * FUNCTION TO PARSE THE STRING *
         # Keeps the logic together.
         def parse_population_string(p_str):
             p_str = p_str.lower().replace(',', '').replace('over', '').replace('approximately', '').replace('about',
