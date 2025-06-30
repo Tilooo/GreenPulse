@@ -7,9 +7,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Some custom styles */
         .map-container {
-            height: 60vh; /* Viewport height for responsiveness */
+            height: 60vh;
             width: 100%;
         }
         .spinner-container {
@@ -23,7 +22,7 @@
     <div class="container mt-5">
         <div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
             <div class="container-fluid py-3">
-                <h1 class="display-5 fw-bold">GreenPulse 🌿</h1>
+                <h1 class="display-5 fw-bold">GreenPulse 🍃</h1>
                 <p class="col-md-8 fs-5">
                     Enter a city name to analyze its distribution of parks, gardens, and forests.
                     <br>
@@ -41,7 +40,7 @@
             </form>
         </div>
 
-        <!-- Loading Spinner (hidden by default) -->
+        <!-- Loading Spinner -->
         <div class="text-center spinner-container" id="loading-spinner">
             <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
                 <span class="visually-hidden">Loading...</span>
@@ -64,17 +63,38 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush mb-3">
-                            <li class="list-group-item fs-5">Number of Green Spaces Found: <span class="badge bg-success rounded-pill float-end">{{ num_parks }}</span></li>
-                            <li class="list-group-item fs-5">Total Green Space Area: <span class="badge bg-success rounded-pill float-end">{{ total_area }} km²</span></li>
+                            <li class="list-group-item fs-5 d-flex justify-content-between align-items-center">
+                                Number of Green Spaces Found
+                                <span class="badge bg-success rounded-pill">{{ num_parks }}</span>
+                            </li>
+                            <li class="list-group-item fs-5 d-flex justify-content-between align-items-center">
+                                Total Green Space Area
+                                <span class="badge bg-success rounded-pill">{{ total_area }} km²</span>
+                            </li>
+
+                            {% if population %}
+                            <li class="list-group-item fs-5 d-flex justify-content-between align-items-center">
+                                Estimated Population
+                                <span class="badge bg-info rounded-pill">{{ population|floatformat:"0," }}</span>
+                            </li>
+                            <li class="list-group-item fs-5 d-flex justify-content-between align-items-center">
+                                Green Space Per Person
+                                <span class="badge bg-primary rounded-pill">{{ sqm_per_capita }} m²</span>
+                            </li>
+                            {% else %}
+                            <li class="list-group-item fs-6 text-muted">
+                                Population data not found for this location.
+                            </li>
+                            {% endif %}
                         </ul>
-                        <div class="map-container">
+                        <h5 class="card-title mt-3">Map of Green Spaces</h5>
+                        <div class="map-container border rounded">
                             {{ map_html|safe }}
                         </div>
                     </div>
                 </div>
             {% endif %}
         </div>
-
     </div>
 
     <!-- JavaScript to handle the loading spinner -->
@@ -84,7 +104,7 @@
         const results = document.getElementById('results-section');
 
         form.addEventListener('submit', function() {
-            // Hides previous results and shows the spinner when form is submitted
+            // Hides previous results and show the spinner when form is submitted
             results.style.display = 'none';
             spinner.style.display = 'block';
         });
