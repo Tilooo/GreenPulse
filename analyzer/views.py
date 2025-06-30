@@ -28,7 +28,7 @@ def analyze_city(city_name):
         total_area_sqkm = round(total_area_sqm / 1_000_000, 2)
 
         # Gets population data
-        population = data_core.get_city_population(city_name)
+        population = data_core.get_population_with_selenium(city_name)
 
         # Calculates per-capita stats if population is available
         sqm_per_capita = None
