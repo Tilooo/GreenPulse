@@ -9,19 +9,28 @@
 
         <ul class="list-group list-group-flush mb-3">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-people-fill text-info me-2"></i> Estimated Population</span>
-                <span class="badge bg-info-subtle text-info-emphasis rounded-pill fs-6">{{ city_data.population|floatformat:"0," }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-rulers text-primary me-2"></i> Green Space Area</span>
                 <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill fs-6">{{ city_data.greenSpace.totalAreaKm2 }} km²</span>
             </li>
+
+            {% if city_data.total_city_area %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-arrows-fullscreen text-secondary me-2"></i> Total City Area</span>
+                <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill fs-6">{{ city_data.total_city_area }} km²</span>
+            </li>
+            {% endif %}
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-people-fill text-info me-2"></i> Estimated Population</span>
+                <span class="badge bg-info-subtle text-info-emphasis rounded-pill fs-6">{{ city_data.population|floatformat:"0," }}</span>
+            </li>
+
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-person-arms-up text-warning me-2"></i> Space Per Person</span>
                 <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill fs-6">{{ city_data.greenSpace.spacePerCapitaM2 }} m²</span>
             </li>
 
-            <!-- Loops through the keyMetrics from the AI! -->
+            <!-- Loops through the other keyMetrics from the AI -->
             {% for metric in city_data.keyMetrics %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-graph-up-arrow text-success me-2"></i> {{ metric.name }}</span>

@@ -2,27 +2,36 @@
 
 from django.shortcuts import render
 from . import data_core
-import logging
 from . import ai_analyzer
+import logging
 
 logger = logging.getLogger(__name__)
 
 
 # --- HELPER FUNCTION ---
-# This function contains the analysis logic for a SINGLE city.
-# It makes main view much cleaner and avoids code duplication.
+# This function manage the analysis for a single city.
 def analyze_city(city_name):
     """
-    Performs a full analysis for a single city and returns the data
-    in a dictionary, or an error message.
+    Performs a full analysis for a single city by calling the AI and then
+    adding contextual data like total city area and a map.
     """
+    # Get the rich, detailed analysis from the AI first.
     city_data, error = ai_analyzer.get_analysis_for_city(city_name)
 
-    # To generate a map, does this based on the city name.
-    if city_data:
-        city_data['map_html'] = data_core.generate_map_for_city(city_name)
+    # If the AI analysis fails for any reason, then stops here and returns the error.
+    if error:
+        return None, error
 
-    return city_data, error
+    # If the AI was successful, enriches the data with own calculations.
+    # The total city area from OSMnx for crucial context.
+    total_area = data_core.get_total_city_area(city_name)
+    city_data['total_city_area'] = total_area
+
+    # Generates the interactive map for the city.
+    city_data['map_html'] = data_core.generate_map_for_city(city_name)
+
+    # Returns the complete, enriched data package.
+    return city_data, None
 
 
 def index_view(request):
@@ -52,5 +61,5 @@ def index_view(request):
                 context['city1_data'] = city1_data
                 context['city2_data'] = city2_data
 
-    # This will render the empty form on first visit, or the results/errors after submission
+    # This will renders the empty form on first visit, or the results/errors after submission
     return render(request, 'analyzer/index.html', context)
