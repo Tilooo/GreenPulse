@@ -1,37 +1,35 @@
 <!-- analyzer/templates/analyzer/partials/result_card.html -->
-
 <div class="card shadow-sm">
-    <div class="card-header fs-4">
-        Analysis for: <strong>{{ city_data.city_name }}</strong>
+    <div class="card-header bg-white border-0 pt-3">
+        <h3 class="card-title text-center fw-bold">{{ city_data.city_name }}</h3>
     </div>
     <div class="card-body">
         <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item fs-5 d-flex justify-content-between align-items-center">
-                Number of Green Spaces
-                <span class="badge bg-success rounded-pill">{{ city_data.num_parks }}</span>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-tree-fill text-success me-2"></i> Number of Green Spaces</span>
+                <span class="badge bg-success-subtle text-success-emphasis rounded-pill fs-6">{{ city_data.num_parks }}</span>
             </li>
-            <li class="list-group-item fs-5 d-flex justify-content-between align-items-center">
-                Total Green Space Area
-                <span class="badge bg-success rounded-pill">{{ city_data.total_area }} km²</span>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-rulers text-primary me-2"></i> Total Green Space Area</span>
+                <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill fs-6">{{ city_data.total_area }} km²</span>
             </li>
 
             {% if city_data.population %}
-            <li class="list-group-item fs-5 d-flex justify-content-between align-items-center">
-                Estimated Population
-                <span class="badge bg-info rounded-pill">{{ city_data.population|floatformat:"0," }}</span>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-people-fill text-info me-2"></i> Estimated Population</span>
+                <span class="badge bg-info-subtle text-info-emphasis rounded-pill fs-6">{{ city_data.population|floatformat:"0," }}</span>
             </li>
-            <li class="list-group-item fs-5 d-flex justify-content-between align-items-center">
-                Green Space Per Person
-                <span class="badge bg-primary rounded-pill">{{ city_data.sqm_per_capita }} m²</span>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-person-arms-up text-warning me-2"></i> Space Per Person</span>
+                <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill fs-6">{{ city_data.sqm_per_capita }} m²</span>
             </li>
             {% else %}
-            <li class="list-group-item fs-6 text-muted">
-                Population data not found.
+            <li class="list-group-item text-muted">
+                <i class="bi bi-question-circle me-2"></i> Population data not found.
             </li>
             {% endif %}
         </ul>
-        <h5 class="card-title mt-3">Map of Green Spaces</h5>
-        <div class="map-container border rounded">
+        <div class="map-container border rounded mt-3">
             {{ city_data.map_html|safe }}
         </div>
     </div>
