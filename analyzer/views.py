@@ -3,6 +3,7 @@
 from django.shortcuts import render
 from . import data_core
 import logging
+from . import ai_analyzer
 
 logger = logging.getLogger(__name__)
 
@@ -15,45 +16,13 @@ def analyze_city(city_name):
     Performs a full analysis for a single city and returns the data
     in a dictionary, or an error message.
     """
-    print(f"--- Starting analysis for {city_name} ---")
-    try:
-        # Gets green space geometries
-        green_spaces_gdf = data_core.get_green_spaces(city_name)
-        if green_spaces_gdf is None or green_spaces_gdf.empty:
-            return None, f"Could not find park data for '{city_name}'. Please check the name."
+    city_data, error = ai_analyzer.get_analysis_for_city(city_name)
 
-        # Calculates statistics
-        num_parks = len(green_spaces_gdf)
-        total_area_sqm = green_spaces_gdf.to_crs(epsg=3857).area.sum()
-        total_area_sqkm = round(total_area_sqm / 1_000_000, 2)
+    # To generate a map, does this based on the city name.
+    if city_data:
+        city_data['map_html'] = data_core.generate_map_for_city(city_name)
 
-        # Gets population data
-        population = data_core.get_population_with_selenium(city_name)
-
-        # Calculates per-capita stats if population is available
-        sqm_per_capita = None
-        if population:
-            sqm_per_capita = round(total_area_sqm / population, 2)
-
-        # Creates the interactive map
-        map_html = data_core.create_interactive_map(green_spaces_gdf)
-
-        # Packages everything into a neat dictionary
-        city_data = {
-            'city_name': city_name,
-            'num_parks': num_parks,
-            'total_area': total_area_sqkm,
-            'population': population,
-            'sqm_per_capita': sqm_per_capita,
-            'map_html': map_html,
-        }
-
-        print(f"--- Successfully finished analysis for {city_name} ---")
-        return city_data, None  # Return data and no error
-
-    except Exception as e:
-        logger.error(f"An unexpected error occurred during analysis for '{city_name}': {e}")
-        return None, f"An unexpected error occurred for '{city_name}'. Please try again."
+    return city_data, error
 
 
 def index_view(request):
