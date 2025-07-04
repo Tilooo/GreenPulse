@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,6 +37,13 @@
             background: linear-gradient(to right, #2a9d8f, #264653);
             color: white;
             border-radius: 1rem;
+        }
+
+        /* STYLES FOR THE HEADER LOGO & TITLE */
+        .header-logo-icon {
+            height: 60px;       /* Control of the icon size */
+            width: auto;        /* Maintain of aspect ratio */
+            margin-right: 1rem; /* The space between the icon and the text */
         }
 
         .btn-primary {
@@ -81,8 +89,16 @@
 
     <div class="container my-5">
         <div class="p-5 mb-4 hero-section shadow-lg">
-            <h1 class="display-4 fw-bold">GreenPulse </h1>
-            <p class="lead">
+
+            <!-- Flexbox container to align the logo and text side-by-side -->
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <!-- THE LOGO IMAGE -->
+                <img src="{% static 'analyzer/images/greenpulse-logo.png' %}" alt="GreenPulse Logo Icon" class="header-logo-icon">
+                <!-- THE TEXT NAME -->
+                <h1 class="display-4 fw-bold m-0">GreenPulse</h1>
+            </div>
+
+            <p class="lead text-center">
                 How green is your city? Compare the parks, gardens, and forests of two urban areas side-by-side.
             </p>
         </div>
