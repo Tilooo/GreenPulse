@@ -17,6 +17,7 @@ genai.configure(api_key=API_KEY)
 JSON_FORMAT_INSTRUCTIONS = """
 {
   "city": "string (City Name, Country)",
+  "officialCityAreaKm2": "number (The official administrative area of the city in square kilometers. Be as accurate as possible, for example, Vilnius is 401.)",
   "population": "number (Estimated city population)",
   "greenSpace": {
     "totalAreaKm2": "number (Total green space area in square kilometers)",
@@ -59,12 +60,11 @@ def get_analysis_for_city(city_name):
 
         response = model.generate_content(prompt)
 
-        # Cleans up the response text and parses it as JSON
         json_text = response.text.strip()
         analysis_data = json.loads(json_text)
 
         print(f"--- Successfully received AI analysis for {city_name} ---")
-        return analysis_data, None  # Returns data and no error
+        return analysis_data, None
 
     except Exception as e:
         print(f"AI analysis failed for {city_name}. Error: {e}")
