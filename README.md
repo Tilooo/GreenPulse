@@ -8,4 +8,6 @@ GreenPulse is a comprehensive urban analysis tool that empowers users to make su
 *   **Detailed Maps**: Generates interactive maps highlighting green areas, water bodies, and leisure spots using Folium and OSMnx.
 *   **City Comparison**: Compare two cities side-by-side to see which one aligns better with your sustainability goals.
 *   **Green Score**: An AI-evaluated score that ranks cities based on their green infrastructure and eco-friendliness.
+
+## 🛠️ Technology Stack
 ![GreenPulse Project](GreenPulse.jpg)
