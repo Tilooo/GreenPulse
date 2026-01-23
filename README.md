@@ -10,4 +10,10 @@ GreenPulse is a comprehensive urban analysis tool that empowers users to make su
 *   **Green Score**: An AI-evaluated score that ranks cities based on their green infrastructure and eco-friendliness.
 
 ## 🛠️ Technology Stack
+
+*   **Backend**: Django 5.2 (Python)
+*   **AI Engine**: Google Generative AI 
+*   **Data Analysis**: Pandas, NumPy
+*   **Mapping & Geospatial**: OSMnx, Folium, Branca, XYZServices
+*   **Frontend**: HTML5, CSS3, Jinja2
 ![GreenPulse Project](GreenPulse.jpg)
