@@ -16,4 +16,5 @@ GreenPulse is a comprehensive urban analysis tool that empowers users to make su
 *   **Data Analysis**: Pandas, NumPy
 *   **Mapping & Geospatial**: OSMnx, Folium, Branca, XYZServices
 *   **Frontend**: HTML5, CSS3, Jinja2
+  
 ![GreenPulse Project](GreenPulse.jpg)
